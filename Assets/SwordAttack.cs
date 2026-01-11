@@ -30,17 +30,18 @@ public class SwordAttack : MonoBehaviour
         swordCollider.enabled = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    [System.Obsolete]
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.tag == "Enemy")
+        if (collision.CompareTag("Enemy"))
         {
-            // Deal damage to the enemy
-            Enemy enemy = other.GetComponent<Enemy>();
-
-            if (enemy != null)
+            EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
             {
-                enemy.Health -= damage;
+                enemyHealth.TakeDamage(1);
             }
         }
     }
+
+
 }
