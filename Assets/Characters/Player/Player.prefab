@@ -260,8 +260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805d324918913b844954916295b45b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  currentHealth: 10
+  maxHealth: 100
+  currentHealth: 100
+  enemySpawner: {fileID: 0}
   healthSlider: {fileID: 0}
 --- !u!1 &2477974902420178487
 GameObject:

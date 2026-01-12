@@ -4,71 +4,64 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
 
-    [Header("Spawn Timing")]
-    public float spawnInterval = 1.5f;
+    [Header("Spawn Settings")]
+    public float spawnInterval = 3f;
+    public float minDistanceBetweenEnemies = 2.5f;
+    public float minDistanceFromPlayer = 3.5f;
 
-    [Header("Spawn Area")]
-    public Vector2 minSpawnPos;
-    public Vector2 maxSpawnPos;
+    public Vector2 spawnAreaMin;
+    public Vector2 spawnAreaMax;
 
-    [Header("Spawn Rules")]
-    public float minDistanceBetweenEnemies = 1.5f;
-    public float minDistanceFromPlayer = 2.5f;
-    public int maxTryCount = 15;
+    public Transform player;
 
-    private Transform player;
+    bool canSpawn = true;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         InvokeRepeating(nameof(SpawnEnemy), 1f, spawnInterval);
     }
 
     void SpawnEnemy()
     {
-        Vector2 spawnPos = Vector2.zero;
-        bool foundValidPosition = false;
+        if (!canSpawn) return;
+        if (player == null) return;
 
-        // Güzel pozisyon aramayý dene
-        for (int i = 0; i < maxTryCount; i++)
+        Vector2 spawnPos;
+        int tries = 0;
+
+        do
         {
-            spawnPos = GetRandomPosition();
+            spawnPos = new Vector2(
+                Random.Range(spawnAreaMin.x, spawnAreaMax.x),
+                Random.Range(spawnAreaMin.y, spawnAreaMax.y)
+            );
 
-            if (IsPositionValid(spawnPos))
-            {
-                foundValidPosition = true;
-                break;
-            }
-        }
+            tries++;
+            if (tries > 30) return;
 
-        // Bulamazsan ZORLA SPAWN
-        if (!foundValidPosition)
-        {
-            spawnPos = GetRandomPosition();
-        }
+        } while (
+            Vector2.Distance(spawnPos, player.position) < minDistanceFromPlayer ||
+            EnemyTooClose(spawnPos)
+        );
 
         Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
     }
 
-    Vector2 GetRandomPosition()
+    bool EnemyTooClose(Vector2 pos)
     {
-        float x = Random.Range(minSpawnPos.x, maxSpawnPos.x);
-        float y = Random.Range(minSpawnPos.y, maxSpawnPos.y);
-        return new Vector2(x, y);
-    }
-
-    bool IsPositionValid(Vector2 pos)
-    {
-        if (Vector2.Distance(pos, player.position) < minDistanceFromPlayer)
-            return false;
-
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
         foreach (GameObject enemy in enemies)
         {
             if (Vector2.Distance(pos, enemy.transform.position) < minDistanceBetweenEnemies)
-                return false;
+                return true;
         }
+        return false;
+    }
 
-        return true;
+    public void StopSpawning()
+    {
+        canSpawn = false;
+        CancelInvoke();
     }
 }

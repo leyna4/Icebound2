@@ -5,6 +5,8 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 5;
     public int currentHealth;
+    public EnemySpawner enemySpawner;
+
 
     public Slider healthSlider;
 
@@ -17,8 +19,22 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         healthSlider.value = currentHealth;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+
     }
+    void Die()
+    {
+        enemySpawner.StopSpawning();
+        Debug.Log("Player Defeated");
+    }
+
+
 }
