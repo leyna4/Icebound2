@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 5;
     public int currentHealth;
     public EnemySpawner enemySpawner;
+    public GameOverManager gameOverManager;
 
 
     public Slider healthSlider;
@@ -30,11 +31,19 @@ public class PlayerHealth : MonoBehaviour
         }
 
     }
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthSlider.value = currentHealth;
+    }
+
     void Die()
     {
         enemySpawner.StopSpawning();
-        Debug.Log("Player Defeated");
+        gameOverManager.ShowGameOver();
     }
+
 
 
 }
