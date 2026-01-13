@@ -5,9 +5,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     Animator animator;
-    [Header("Audio")]
-    public AudioClip jumpSound;
-    private AudioSource audioSource;
 
 
     public float Health
@@ -31,8 +28,6 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
         animator = GetComponent<Animator>();
     }
 
