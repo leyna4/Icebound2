@@ -150,4 +150,10 @@ public class PlayerController : MonoBehaviour
     {
         canMove = true;
     }
+    public void AttackRight()
+    {
+        Debug.Log("ATTACK RIGHT");
+        // mevcut kod
+    }
+
 }

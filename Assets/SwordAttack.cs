@@ -10,9 +10,9 @@ public class SwordAttack : MonoBehaviour
 
     private void Start()
     {
-        rightAttackOffset = transform.position;
+        // Global pozisyon yerine baþlangýçtaki lokal pozisyonu sakla
+        rightAttackOffset = transform.localPosition;
     }
-
     public void AttackRight()
     {
         swordCollider.enabled = true;

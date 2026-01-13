@@ -6,21 +6,21 @@ public class EnemyMovement : MonoBehaviour
 
     private Transform player;
     private Rigidbody2D rb;
+
     [Header("Audio")]
-    public AudioClip jumpSound;
+    public AudioClip moveSound;
+    public float soundInterval = 1.2f; // Sesler arasý süre
+
     private AudioSource audioSource;
-    public void PlayJumpSound()
-    {
-        GetComponent<AudioSource>().PlayOneShot(jumpSound);
-    }
-
-
+    private float soundTimer;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
 
-        rb = GetComponent<Rigidbody2D>();
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -36,5 +36,27 @@ public class EnemyMovement : MonoBehaviour
 
         Vector2 direction = (player.position - transform.position).normalized;
         rb.velocity = direction * moveSpeed;
+
+        HandleMoveSound();
+    }
+
+    [System.Obsolete]
+    void HandleMoveSound()
+    {
+        // Enemy hareket ediyorsa
+        if (rb.velocity.magnitude > 0.1f)
+        {
+            soundTimer -= Time.fixedDeltaTime;
+
+            if (soundTimer <= 0f)
+            {
+                audioSource.PlayOneShot(moveSound);
+                soundTimer = soundInterval;
+            }
+        }
+        else
+        {
+            soundTimer = 0f;
+        }
     }
 }
