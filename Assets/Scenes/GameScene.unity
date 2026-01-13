@@ -69568,14 +69568,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5426091282888432188, guid: dce9cdb028552b44b8d3860001519c2b, type: 3}
-      propertyPath: m_Offset.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5426091282888432188, guid: dce9cdb028552b44b8d3860001519c2b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8588028736454343416, guid: dce9cdb028552b44b8d3860001519c2b, type: 3}
       propertyPath: maxHealth
       value: 3
