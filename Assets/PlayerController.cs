@@ -6,6 +6,12 @@ using UnityEngine.InputSystem;
 // Takes and handles input and movement for a player character
 public class PlayerController : MonoBehaviour
 {
+    [Header("Audio")]
+    public AudioClip walkSound;
+    public AudioClip swordSound;
+
+    private AudioSource audioSource;
+
     public float moveSpeed = 1f;
     public float collisionOffset = 0.05f;
     public ContactFilter2D movementFilter;
@@ -25,6 +31,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     private void FixedUpdate()
@@ -48,6 +56,11 @@ public class PlayerController : MonoBehaviour
                 }
 
                 animator.SetBool("isMoving", success);
+                if (success && !audioSource.isPlaying)
+                {
+                    audioSource.PlayOneShot(walkSound);
+                }
+
             }
             else
             {
@@ -109,6 +122,8 @@ public class PlayerController : MonoBehaviour
     {
         LockMovement();
 
+        audioSource.PlayOneShot(swordSound);
+
         if (spriteRenderer.flipX == true)
         {
             swordAttack.AttackLeft();
@@ -118,6 +133,7 @@ public class PlayerController : MonoBehaviour
             swordAttack.AttackRight();
         }
     }
+
 
     public void EndSwordAttack()
     {

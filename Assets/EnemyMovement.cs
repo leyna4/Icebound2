@@ -6,9 +6,20 @@ public class EnemyMovement : MonoBehaviour
 
     private Transform player;
     private Rigidbody2D rb;
+    [Header("Audio")]
+    public AudioClip jumpSound;
+    private AudioSource audioSource;
+    public void PlayJumpSound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(jumpSound);
+    }
+
+
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         rb = GetComponent<Rigidbody2D>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
