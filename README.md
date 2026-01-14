@@ -69,4 +69,15 @@ Edited in Audacity
 
 Properly mixed in Unity
 
+Recorded Audio Sources
+
+Player Footsteps: Recorded by stepping on snow.
+
+Player Sword Swing: Recorded by swinging a rope to imitate a sword attack.
+
+Ambience: Recorded outdoor windy sound to create a cold, icy environment.
+
+Fishing Interaction: Recorded an oven bell sound to represent catching a fish.
+
+UI Button Sound: Recorded ice cracking sound for button click feedback.
 
